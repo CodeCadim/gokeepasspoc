@@ -1,6 +1,7 @@
 package keystore
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/tobischo/gokeepasslib/v3"
@@ -31,6 +32,10 @@ func Close() error {
 	return ks.file.Close()
 }
 
+func Index(idx int) (pass string) {
+	return ks.db.Content.Root.Groups[0].Entries[idx].GetPassword()
+}
+
 func Lookup(key string) (pass string) {
 	for _, entry := range ks.db.Content.Root.Groups[0].Entries {
 		if key == entry.GetTitle() {
@@ -41,8 +46,8 @@ func Lookup(key string) (pass string) {
 }
 
 func List() (res []string) {
-	for _, entry := range ks.db.Content.Root.Groups[0].Entries {
-		res = append(res, entry.GetTitle())
+	for idx, entry := range ks.db.Content.Root.Groups[0].Entries {
+		res = append(res, fmt.Sprintf("%d: %s", idx, entry.GetTitle()))
 	}
 	return res
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strconv"
 
 	"gokeepasspoc/input"
 	"gokeepasspoc/keystore"
@@ -21,7 +22,11 @@ func main() {
 	for _, item := range keystore.List() {
 		println(item)
 	}
-	input := input.Text("Enter key name:")
-	pw := keystore.Lookup(input)
-	println("Lookup: ", pw)
+	input := input.Text("Enter key index:")
+	idx, err := strconv.Atoi(input)
+	if err != nil {
+		log.Panic(err)
+	}
+	pw := keystore.Index(idx)
+	println("Lookup by index", idx, pw)
 }
