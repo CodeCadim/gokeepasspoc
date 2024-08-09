@@ -24,14 +24,18 @@ func main() {
 		log.Panic(err)
 	}
 	defer keystore.Close()
-	for _, item := range keystore.List() {
+	for _, item := range keystore.ListWithIndex() {
 		println(item)
 	}
-	input := input.Text("Enter key index:")
-	idx, err := strconv.Atoi(input)
+	index := input.Text("Enter key index:")
+	idx, err := strconv.Atoi(index)
 	if err != nil {
 		log.Panic(err)
 	}
 	pw := keystore.Index(idx)
 	println("Lookup by index", idx, pw)
+
+	name := input.Text("Enter name:")
+	pw = keystore.Lookup(name)
+	println("Lookup by name", name, pw)
 }
