@@ -1,7 +1,9 @@
 package main
 
 import (
+	"errors"
 	"log"
+	"os"
 	"strconv"
 
 	"gokeepasspoc/input"
@@ -12,6 +14,9 @@ func main() {
 	kbdxfile := input.Env("PASSDB")
 	if kbdxfile == "" {
 		log.Panic("define PASSDB env to your kdbx file")
+	}
+	if _, err := os.Stat(kbdxfile); errors.Is(err, os.ErrNotExist) {
+		log.Fatalf("%s does not exist", kbdxfile)
 	}
 	pass := input.Pass("Enter password:")
 	err := keystore.Open(kbdxfile, pass)
