@@ -2,6 +2,8 @@
 
 Proof of concept of using Go to manipulate a kbdx file
 
+![Example](./example.gif)
+
 ## Usage
 
 ```bash
