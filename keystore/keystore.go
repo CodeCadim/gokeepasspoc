@@ -39,7 +39,9 @@ func Index(idx int) (pass string) {
 func Lookup(key string) (pass string) {
 	for _, entry := range ks.db.Content.Root.Groups[0].Entries {
 		if key == entry.GetTitle() {
-			return entry.GetPassword()
+			username := entry.GetContent("UserName")
+			password := entry.GetContent("Password")
+			return fmt.Sprintf("%s\t%s\n", username, password)
 		}
 	}
 	return ""
