@@ -48,6 +48,13 @@ func Lookup(key string) (pass string) {
 }
 
 func List() (res []string) {
+	for _, entry := range ks.db.Content.Root.Groups[0].Entries {
+		res = append(res, entry.GetTitle())
+	}
+	return res
+}
+
+func ListWithIndex() (res []string) {
 	for idx, entry := range ks.db.Content.Root.Groups[0].Entries {
 		res = append(res, fmt.Sprintf("%d: %s", idx, entry.GetTitle()))
 	}
